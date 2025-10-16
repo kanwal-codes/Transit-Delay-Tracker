@@ -1,0 +1,268 @@
+/* TTC Delay Predictor - Custom CSS Styles */
+
+/* Main theme colors */
+:root {
+    --primary-color: #1f77b4;
+    --secondary-color: #ff7f0e;
+    --success-color: #2ca02c;
+    --warning-color: #ff7f0e;
+    --danger-color: #d62728;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --ttc-red: #da020e;
+    --ttc-blue: #003d82;
+}
+
+/* Main container styling */
+.main .block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    max-width: 1200px;
+}
+
+/* Header styling */
+.main-header {
+    background: linear-gradient(135deg, var(--ttc-red), var(--ttc-blue));
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.main-header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.main-header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Metric cards */
+.metric-card {
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 5px solid var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Prediction boxes */
+.prediction-box {
+    background: linear-gradient(135deg, #e8f4fd, #d1ecf1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 2px solid var(--primary-color);
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.prediction-box h4 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.prediction-box p {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Anomaly alerts */
+.anomaly-alert {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 5px solid var(--warning-color);
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.anomaly-alert h4 {
+    color: var(--warning-color);
+    margin-bottom: 1rem;
+}
+
+/* Success messages */
+.success-message {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--success-color);
+    margin: 1rem 0;
+}
+
+/* Sidebar styling */
+.sidebar .sidebar-content {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.sidebar .stSelectbox > div > div {
+    background-color: white;
+    border-radius: 5px;
+}
+
+/* Button styling */
+.stButton > button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.stButton > button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Chart containers */
+.chart-container {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 1rem 0;
+}
+
+/* Data table styling */
+.stDataFrame {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Loading spinner */
+.stSpinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Footer styling */
+.footer {
+    background: linear-gradient(135deg, var(--dark-color), #495057);
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.footer p {
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .main-header h1 {
+        font-size: 2rem;
+    }
+    
+    .main-header p {
+        font-size: 1rem;
+    }
+    
+    .metric-card {
+        padding: 1rem;
+    }
+    
+    .prediction-box {
+        padding: 1rem;
+    }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Status indicators */
+.status-on-time {
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+.status-delayed {
+    color: var(--danger-color);
+    font-weight: bold;
+}
+
+.status-slight-delay {
+    color: var(--warning-color);
+    font-weight: bold;
+}
+
+/* Route badges */
+.route-badge {
+    display: inline-block;
+    background: var(--primary-color);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin: 0.1rem;
+}
+
+/* Confidence indicators */
+.confidence-high {
+    color: var(--success-color);
+}
+
+.confidence-medium {
+    color: var(--warning-color);
+}
+
+.confidence-low {
+    color: var(--danger-color);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+

@@ -1,0 +1,5 @@
+# Environment variables
+TTC_API_URL=https://api.ttc.ca/v1/
+WEATHER_API_KEY=your_weather_api_key_here
+STREAMLIT_THEME_BASE=light
+
