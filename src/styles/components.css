@@ -1,0 +1,156 @@
+/* File: src/styles/components.css */
+/* Component-specific styles */
+
+/* Main header styling */
+.main-header {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 50%, var(--primary-orange) 100%);
+    padding: 3rem 2rem;
+    border-radius: var(--border-radius-xl);
+    margin-bottom: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.main-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="maple" patternUnits="userSpaceOnUse" width="20" height="20"><path d="M10,2 L8,8 L2,10 L8,12 L10,18 L12,12 L18,10 L12,8 Z" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23maple)"/></svg>');
+    opacity: 0.3;
+}
+
+.main-header h1 {
+    color: var(--primary-white);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 3.5rem;
+    margin: 0;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1;
+    letter-spacing: -0.02em;
+}
+
+.main-header p {
+    color: rgba(255,255,255,0.95);
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3rem;
+    margin: 1rem 0 0 0;
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.01em;
+}
+
+/* Search container styling */
+.search-container {
+    background: var(--gray-50);
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-200);
+    position: relative;
+}
+
+.search-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-green), var(--primary-orange));
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+/* Search row alignment */
+.search-row-perfect {
+    display: flex;
+    align-items: stretch;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.search-row-perfect .stColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-row-perfect .stColumn:first-child {
+    flex: 1;
+}
+
+.search-row-perfect .stColumn:not(:first-child) {
+    flex: 0 0 auto;
+    min-width: 120px;
+    justify-content: flex-end;
+}
+
+/* Input field styling */
+.stTextInput > div > div > input {
+    background: var(--primary-white) !important;
+    color: var(--gray-800) !important;
+    border: 2px solid var(--gray-300) !important;
+    border-radius: var(--border-radius-md) !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 1rem !important;
+    font-family: 'Inter', sans-serif !important;
+    transition: var(--transition) !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.stTextInput > div > div > input:focus {
+    border-color: var(--primary-green) !important;
+    box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1) !important;
+    outline: none !important;
+}
+
+/* Button styling */
+.stButton > button {
+    background: linear-gradient(135deg, var(--maple-red), var(--primary-orange)) !important;
+    color: var(--primary-white) !important;
+    border: none !important;
+    border-radius: var(--border-radius-md) !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    font-family: 'Inter', sans-serif !important;
+    transition: var(--transition) !important;
+    box-shadow: var(--shadow-md) !important;
+    cursor: pointer !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-lg) !important;
+    background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange)) !important;
+}
+
+/* GPS button specific styling */
+.stButton > button[title*="GPS"], 
+.stButton > button[title*="current location"],
+.stButton > button:last-child {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green)) !important;
+}
+
+.stButton > button[title*="GPS"]:hover,
+.stButton > button[title*="current location"]:hover,
+.stButton > button:last-child:hover {
+    background: linear-gradient(135deg, var(--secondary-green), var(--primary-green)) !important;
+}
+
+/* Hide Streamlit labels */
+.stTextInput label {
+    display: none !important;
+}
+

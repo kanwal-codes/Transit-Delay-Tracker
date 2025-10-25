@@ -1,0 +1,63 @@
+/* File: src/styles/main.css */
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Global styles */
+.stApp {
+    background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
+    font-family: 'Inter', sans-serif;
+    color: var(--gray-800);
+}
+
+/* Ensure all text is visible */
+.stApp * {
+    color: inherit;
+}
+
+/* Override any white text issues */
+.stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6 {
+    color: var(--gray-800);
+}
+
+.stApp p, .stApp div, .stApp span {
+    color: var(--gray-700);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--gray-100);
+    border-radius: var(--border-radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary-green), var(--primary-orange));
+    border-radius: var(--border-radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--secondary-green), var(--secondary-orange));
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .main-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .main-header p {
+        font-size: 1.1rem;
+    }
+    
+    .search-container {
+        padding: 1.5rem;
+    }
+    
+    .transit-card {
+        padding: 1rem;
+    }
+}
+

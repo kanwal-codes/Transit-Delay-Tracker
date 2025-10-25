@@ -1,0 +1,142 @@
+/* File: src/styles/transit.css */
+/* Transit card styling */
+.transit-card {
+    background: var(--primary-white);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.transit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary-green), var(--primary-orange));
+}
+
+.transit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-orange);
+}
+
+.route-header {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    color: var(--primary-white) !important;
+    padding: 1.25rem;
+    border-radius: var(--border-radius-md);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    box-shadow: var(--shadow-md);
+    position: relative;
+}
+
+.route-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1));
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+}
+
+/* Arrival time styling */
+.arrival-time {
+    background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+    color: var(--primary-white);
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-md);
+    margin: 0.5rem 0;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: var(--shadow-sm);
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+/* Suggestion buttons */
+.suggestion-button {
+    background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+    color: var(--gray-800);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius-md);
+    padding: 0.75rem 1rem;
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    transition: var(--transition);
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.suggestion-button:hover {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    color: var(--primary-white);
+    border-color: var(--primary-green);
+    transform: translateX(4px);
+}
+
+/* Loading spinner */
+.stSpinner > div {
+    border-color: var(--primary-green) transparent var(--primary-green) transparent;
+}
+
+/* Error and info messages */
+.stAlert {
+    border-radius: var(--border-radius-md);
+    border: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.stAlert[data-testid="stAlert"] {
+    background: var(--gray-50);
+    border-left: 4px solid var(--primary-orange);
+}
+
+/* Map container */
+.map-container {
+    background: var(--primary-white);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+}
+
+/* Results header */
+.results-header {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    color: var(--primary-white);
+    padding: 1.5rem;
+    border-radius: var(--border-radius-lg);
+    margin: 2rem 0 1rem 0;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.results-header h2 {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.results-header p {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.9;
+    font-size: 1rem;
+}
+
