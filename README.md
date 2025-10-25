@@ -1,180 +1,207 @@
-# 🍁 Maple Mover
+# 🍁 MapleMover
 
-**Real-time TTC transit information with smart location detection**
+**Real-time TTC transit tracker with GPS location detection**
 
-Built with Streamlit and Python to demonstrate real-time API integration, geolocation, caching, and visualization — fully Dockerized and production-ready.
-
-Maple Mover is a production-ready transit finder that detects your location and shows nearby TTC routes with live arrival information. Built with Streamlit and designed for Toronto commuters.
+A modern Python/Streamlit application that detects your location and shows nearby TTC routes with live arrival information. Built with real-time geocoding, interactive maps, and smart Toronto bounds validation.
 
 ## 🚀 **Quick Start**
 
 ```bash
-# Clone and setup
-git clone <repository-url>
+# Clone the repository
+git clone https://github.com/kanwal-codes/Transit-Delay-Tracker.git
 cd Transit-Delay-Tracker
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements_production.txt
 
 # Run the app
-./launch_maple_mover.sh
+python -m streamlit run src/app.py
 ```
 
-**Access:** http://localhost:8500
+**Access:** http://localhost:8501
 
 ## ✨ **Features**
 
-- **🌍 Real Geolocation** - Browser-based location detection
-- **📍 Manual Location Input** - Enter coordinates manually
-- **🚌 Real-time Transit Data** - Live TTC arrival information
-- **🎯 Smart Station Finding** - Finds nearest stations automatically
-- **📱 Mobile Responsive** - Works on all devices
-- **🍁 Toronto-Focused** - Optimized for TTC routes
+- **🌍 Real-time GPS Detection** - Browser-based location detection with auto-reload
+- **📍 Smart Address Search** - Real-time geocoding with OpenStreetMap Nominatim
+- **🗺️ Toronto Bounds Validation** - Shows "coming soon" message for non-Toronto locations
+- **🚌 Live TTC Data** - Real-time transit information with mock data fallback
+- **📱 Interactive Maps** - Plotly-powered maps with station markers
+- **🔄 Auto-reload Development** - Hot reload on file changes
+- **🐳 Docker Support** - Containerized deployment ready
+- **📊 Structured Logging** - Production-grade logging with structlog
 
-## 🏗️ **Architecture**
+## 🏗️ **Project Structure**
 
 ```
-Maple Mover/
-├── maple_mover_app.py          # Main Streamlit application
-├── geolocation_handler.py      # Location detection utilities
-├── maple_mover.env            # Environment configuration
-├── requirements_production.txt # Production dependencies
-├── launch_maple_mover.sh      # Easy launcher script
-└── .streamlit/                # Streamlit configuration
-    └── config.toml
+MapleMover/
+├── src/
+│   ├── app.py                 # Main Streamlit application
+│   ├── api/
+│   │   └── ttc_client.py     # TTC API integration with fallback
+│   ├── config/
+│   │   └── settings.py       # Configuration management
+│   ├── geocoding/
+│   │   └── service.py        # Real-time geocoding service
+│   ├── services/
+│   │   └── location.py       # Location detection & validation
+│   ├── ui/
+│   │   ├── components.py     # Main UI coordinator
+│   │   ├── forms.py          # Search interface & GPS detection
+│   │   ├── layouts.py        # Page layouts
+│   │   └── transit.py         # Transit results & maps
+│   ├── styles/
+│   │   ├── main.css          # Main styling
+│   │   ├── components.css    # Component styles
+│   │   ├── themes.css        # Theme definitions
+│   │   └── transit.css       # Transit-specific styles
+│   └── utils/
+│       └── geo_utils.py      # Geographic utilities
+├── .streamlit/
+│   └── config.toml           # Streamlit configuration
+├── Dockerfile                # Docker containerization
+├── requirements_production.txt # Python dependencies
+├── dev.sh                    # Development script
+└── run_app.sh               # Production run script
 ```
 
 ## 🔧 **Configuration**
 
-### Environment Variables
-Copy `maple_mover.env` to `.env` and customize:
-
-```bash
-# API Configuration
-TTC_API_URL=https://myttc.ca
-API_TIMEOUT=10
-API_RATE_LIMIT=0.5
-
-# Location Settings
-DEFAULT_LOCATION_LAT=43.6532
-DEFAULT_LOCATION_LON=-79.3832
-DEFAULT_LOCATION_NAME="Downtown Toronto"
-
-# Performance
-CACHE_DURATION=30
-MAX_STATIONS=5
-MAX_ARRIVALS=3
-```
-
-### Streamlit Configuration
-Located in `.streamlit/config.toml`:
-
+### Streamlit Configuration (`.streamlit/config.toml`)
 ```toml
 [server]
-port = 8500
-address = "0.0.0.0"
-headless = true
+port = 8501
+runOnSave = true
+fileWatcherType = "poll"
 
 [browser]
 gatherUsageStats = false
 ```
 
-## 🚀 **Deployment**
-
-### Local Development
+### Environment Variables (`maple_mover.env`)
 ```bash
-./launch_maple_mover.sh
+# TTC API Configuration
+TTC_API_URL=https://myttc.ca
+REQUEST_TIMEOUT=30
+API_RATE_LIMIT=0.2
+
+# Location Settings
+MAX_STATIONS=5
+MAX_ARRIVALS=3
+
+# Development
+DEBUG=true
 ```
 
-### Production Deployment
-```bash
-# Set production environment
-export STREAMLIT_SERVER_HEADLESS=true
-export STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+## 🚀 **Deployment Options**
 
-# Run with production settings
-streamlit run maple_mover_app.py --server.port 8500 --server.address 0.0.0.0
+### **Local Development**
+```bash
+# Quick start with auto-reload
+./dev.sh
+
+# Or manually
+source venv/bin/activate
+python -m streamlit run src/app.py
 ```
 
-### Docker Deployment
+### **Production Deployment**
 ```bash
-# Build image
+# Using production script
+./run_app.sh
+
+# Or with Docker
 docker build -t maple-mover .
-
-# Run container
-docker run -p 8500:8500 maple-mover
+docker run -p 8501:8501 maple-mover
 ```
 
-## 📊 **API Integration**
-
-Maple Mover integrates with:
-- **MyTTC API** - Real-time TTC transit data
-- **Browser Geolocation API** - User location detection
-- **Streamlit** - Web application framework
-
-## 🛠️ **Development**
-
-### Project Structure
-- **Step 1** ✅ - Production app with geolocation
-- **Step 2** 🔄 - Dynamic station finder
-- **Step 3** ⏳ - API optimization & caching
-- **Step 4** ⏳ - Production configuration
-- **Step 5** ⏳ - Error handling
-- **Step 6** ⏳ - Performance optimization
-- **Step 7** ⏳ - Testing & deployment
-
-### Running Tests
+### **Docker Deployment**
 ```bash
-# Install test dependencies
-pip install pytest
+# Build and run
+docker build -t maple-mover .
+docker run -p 8501:8501 maple-mover
 
-# Run tests
-pytest tests/ -v
-
-# Run specific test file
-pytest tests/test_api_client.py -v
+# Access at: http://localhost:8501
 ```
 
-### Adding New Features
-1. Update `maple_mover.env` for configuration
-2. Modify `maple_mover_app.py` for UI changes
-3. Update `geolocation_handler.py` for location features
-4. Add tests in `tests/` directory
-5. Test with `./launch_maple_mover.sh`
+## 🛠️ **Key Features Explained**
+
+### **Real-time Location Detection**
+- Uses browser's `navigator.geolocation` API
+- Auto-detects location on page load
+- Manual GPS detection with "Force GPS Detection" button
+- URL parameter passing for page reloads
+
+### **Smart Geocoding**
+- Real-time address-to-coordinates conversion
+- OpenStreetMap Nominatim API integration
+- Toronto context fallback for better accuracy
+- Reverse geocoding for readable addresses
+
+### **Toronto Bounds Validation**
+- Precise Toronto city boundaries (43.58-43.85 lat, -79.65 to -79.0 lon)
+- Excludes suburbs like Brampton, Mississauga
+- Shows "coming soon" message for non-Toronto locations
+- Prevents unnecessary TTC API calls
+
+### **TTC API Integration**
+- Real-time TTC data from MyTTC API
+- Mock data fallback when API is unavailable
+- Increased timeout (30 seconds) for reliability
+- Rate limiting and error handling
+
+### **Interactive Visualizations**
+- Plotly-powered interactive maps
+- Station markers with route information
+- Real-time arrival times display
+- Mobile-responsive design
+
+## 🧪 **Testing**
+
+```bash
+# Run tests
+python -m pytest tests/ -v
+
+# Run specific test
+python -m pytest tests/test_api_client.py -v
+```
+
+## 🔍 **Technical Highlights**
+
+- **Modern Python Stack**: Python 3.9 + Streamlit + Plotly
+- **Real-time APIs**: TTC MyTTC API + OpenStreetMap Nominatim
+- **Modular Architecture**: Clean separation of concerns
+- **Error Handling**: Graceful fallbacks and user-friendly messages
+- **Performance**: Caching, rate limiting, and optimized API calls
+- **Development Experience**: Auto-reload, structured logging, Docker support
+- **Production Ready**: Dockerized, configurable, and scalable
 
 ## 🤝 **Contributing**
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📄 **License**
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🔍 **Key Engineering Highlights**
-
-- **Built with Python 3.9 + Streamlit 1.50** - Modern, production-ready stack
-- **Real-time data ingestion from MyTTC API** - Live transit information with rate limiting
-- **Modular architecture** - Clean separation of data, geolocation, and UI layers
-- **Caching + rate-limiting** - Optimized API efficiency with 60-second TTL caching
-- **Dockerized for one-command deployment** - Production-ready containerization
-- **Structured logging with structlog** - Production-grade logging and monitoring
-- **Interactive visualizations** - Plotly charts and real-time map integration
-- **AI-powered insights** - Data analysis for average arrival times and route optimization
-- **Comprehensive error handling** - Graceful fallbacks and user-friendly error messages
-- **Mobile-responsive design** - Works seamlessly across all devices
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 **Acknowledgments**
 
 - **TTC** - For providing real-time transit data
 - **MyTTC** - For the excellent API
+- **OpenStreetMap** - For geocoding services
 - **Streamlit** - For the amazing web framework
-- **Toronto Commuters** - For the inspiration
+- **Plotly** - For interactive visualizations
 
 ---
 
 **Made with ❤️ for Toronto commuters** 🍁🚌
 
+**Live Demo:** [View on GitHub](https://github.com/kanwal-codes/Transit-Delay-Tracker)
