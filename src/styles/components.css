@@ -1,5 +1,5 @@
 /* File: src/styles/components.css */
-/* Component-specific styles */
+/* Purpose: UI component styling - search bar, buttons, header, purple containers (PRIMARY search bar styles) */
 
 /* Main header styling */
 .main-header {
@@ -47,26 +47,75 @@
     letter-spacing: 0.01em;
 }
 
-/* Search container styling */
-.search-container {
-    background: var(--gray-50);
-    padding: 2rem;
-    border-radius: var(--border-radius-lg);
-    margin-bottom: 2rem;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--gray-200);
-    position: relative;
+/* Search container styling - Purple box like Homepage */
+.search-container,
+div[style*="background: #eaddff"] {
+    background: #eaddff !important;
+    padding: 2rem !important;
+    border-radius: 32px !important;
+    max-width: 42rem !important;
+    margin: 2rem auto !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
 }
 
-.search-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-green), var(--primary-orange));
-    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+/* Target Streamlit's multiple wrapper divs - AGGRESSIVE BORDER REMOVAL */
+.search-container .stTextInput > div > div > div,
+.search-container .stTextInput > div > div,
+.search-container .stTextInput > div,
+.search-container .stTextInput,
+.search-container [data-baseweb="input"],
+.search-container [data-baseweb="base-input"] {
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.search-container .stTextInput > div:focus,
+.search-container .stTextInput kal-vegetable:focus-within,
+.search-container [data-baseweb="input"]:focus,
+.search-container [data-baseweb="input"]:focus-within {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Remove any Streamlit default styling on buttons in search container */
+.search-container .stButton {
+    margin-top: 0 !important;
+    border: none !important;
+}
+
+/* Remove borders from Streamlit's column/block wrappers */
+.search-container .stLayoutWrapper,
+.search-container .stHorizontalBlock,
+.search-container .stVerticalBlock,
+.search-container .stColumn,
+.search-container .stElementContainer,
+.search-container [data-testid="stLayoutWrapper"],
+.search-container [data-testid="stHorizontalBlock"],
+.search-container [data-testid="stVerticalBlock"],
+.search-container [data-testid="stColumn"] {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* UNIVERSAL BORDER REMOVAL - Remove borders from ALL divs inside search container */
+.search-container div {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Ensure Streamlit doesn't add extra padding/margin */
+.search-container > div,
+.search-container > div > div {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
 }
 
 /* Search row alignment */
@@ -92,61 +141,86 @@
     justify-content: flex-end;
 }
 
-/* Input field styling */
+/* Input field styling - Modern search box with better formatting - AGGRESSIVE TARGETING */
+input[placeholder*="Search for routes"],
+input[aria-label*="Search Address"],
+.stTextInput input,
 .stTextInput > div > div > input {
-    background: var(--primary-white) !important;
-    color: var(--gray-800) !important;
-    border: 2px solid var(--gray-300) !important;
-    border-radius: var(--border-radius-md) !important;
-    padding: 0.75rem 1rem !important;
-    font-size: 1rem !important;
+    background: white !important;
+    color: #1c1b1f !important;
+    border: 2px solid transparent !important;
+    border-radius: 16px !important;
+    padding: 1rem 1.25rem !important;
+    height: 3.5rem !important;
+    font-size: 1.125rem !important;
     font-family: 'Inter', sans-serif !important;
-    transition: var(--transition) !important;
-    box-shadow: var(--shadow-sm) !important;
+    font-weight: 400 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    letter-spacing: -0.01em !important;
+}
+
+.stTextInput > div > div > input::placeholder {
+    color: #79747e !important;
+    font-weight: 400 !important;
 }
 
 .stTextInput > div > div > input:focus {
-    border-color: var(--primary-green) !important;
-    box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1) !important;
+    border: 2px solid #6750a4 !important;
+    box-shadow: 0 4px 12px rgba(103, 80, 164, 0.25) !important;
     outline: none !important;
+    background: #fffbfe !important;
+    transform: translateY(-1px) !important;
 }
 
-/* Button styling */
+/* Force remove all borders when not focused */
+.stTextInput > div > div > input:not(:focus) {
+    border: 2px solid transparent !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Button styling - Modern gradient button with better formatting */
 .stButton > button {
-    background: linear-gradient(135deg, var(--maple-red), var(--primary-orange)) !important;
-    color: var(--primary-white) !important;
+    background: linear-gradient(135deg, #6750a4 0%, #7c4a91 100%) !important;
+    color: white !important;
     border: none !important;
-    border-radius: var(--border-radius-md) !important;
-    padding: 0.75rem 1.5rem !important;
+    border-radius: 16px !important;
+    padding: 1rem 2rem !important;
     font-weight: 600 !important;
-    font-size: 0.95rem !important;
+    font-size: 1.125rem !important;
     font-family: 'Inter', sans-serif !important;
-    transition: var(--transition) !important;
-    box-shadow: var(--shadow-md) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 12px rgba(103, 80, 164, 0.3) !important;
     cursor: pointer !important;
-    height: 48px !important;
+    height: 3.5rem !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    letter-spacing: 0.02em !important;
 }
 
 .stButton > button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: var(--shadow-lg) !important;
-    background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange)) !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 8px 20px rgba(103, 80, 164, 0.4) !important;
+    background: linear-gradient(135deg, #554593 0%, #6b3e7a 100%) !important;
+}
+
+.stButton > button:active {
+    transform: translateY(0) scale(0.98) !important;
+    box-shadow: 0 2px 8px rgba(103, 80, 164, 0.2) !important;
 }
 
 /* GPS button specific styling */
 .stButton > button[title*="GPS"], 
 .stButton > button[title*="current location"],
 .stButton > button:last-child {
-    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green)) !important;
+    background: linear-gradient(135deg, #6750a4 0%, #7c4a91 100%) !important;
 }
 
 .stButton > button[title*="GPS"]:hover,
 .stButton > button[title*="current location"]:hover,
 .stButton > button:last-child:hover {
-    background: linear-gradient(135deg, var(--secondary-green), var(--primary-green)) !important;
+    background: linear-gradient(135deg, #554593 0%, #6b3e7a 100%) !important;
 }
 
 /* Hide Streamlit labels */

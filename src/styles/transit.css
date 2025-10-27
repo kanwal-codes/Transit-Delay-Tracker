@@ -1,4 +1,6 @@
 /* File: src/styles/transit.css */
+/* Purpose: Transit results styling - cards, route headers, arrival times, suggestion buttons, maps */
+
 /* Transit card styling */
 .transit-card {
     background: var(--primary-white);

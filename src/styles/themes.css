@@ -1,4 +1,5 @@
 /* File: src/styles/themes.css */
+/* Purpose: CSS custom properties (variables) only - color palette, shadows, borders, transitions */
 /* Maple Leaf Inspired Color Theme */
 :root {
     --primary-green: #2D5016;
