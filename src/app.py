@@ -196,13 +196,11 @@ class MapleMoverApp:
         if not st.session_state.get("auto_location_processed", False):
             detected_lat, detected_lon, source = self.loc.get_user_location()
             if detected_lat and detected_lon and source == "browser_geolocation":
-                # Check if we already have an address for these coordinates
-                if not st.session_state.get("search_address"):
-                    # Reverse geocode the location to get address
-                    with st.spinner("📍 Detecting your location..."):
-                        addr = self.geo.reverse_geocode(detected_lat, detected_lon)
-                    if addr:
-                        st.session_state.search_address = addr
+                # Always populate the search bar with the live detected address
+                with st.spinner("📍 Detecting your location..."):
+                    addr = self.geo.reverse_geocode(detected_lat, detected_lon)
+                if addr:
+                    st.session_state.search_address = addr
                 
                 st.session_state.location_source = source
                 st.session_state.user_lat = detected_lat
@@ -210,6 +208,9 @@ class MapleMoverApp:
                 lat = detected_lat
                 lon = detected_lon
                 st.session_state.auto_location_processed = True
+                # Clear any pending request flag
+                if st.session_state.get("location_requested"):
+                    st.session_state.location_requested = False
 
         # Step 1: show the search bar always (now with address populated)
         address = self.ui.render_search_interface()
