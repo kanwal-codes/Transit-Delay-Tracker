@@ -64,6 +64,33 @@ class UIComponents:
         """Render info message"""
         st.info(f"ℹ️ {message}")
 
+    def render_out_of_area_message(self):
+        """Render a Material You styled, centered message for out-of-area notice."""
+        st.markdown(
+            """
+            <div style="display:flex; justify-content:center; margin: 2rem 0;">
+                <div style="
+                    max-width: 720px;
+                    width: 100%;
+                    padding: 1.25rem 1.5rem;
+                    border-radius: 16px;
+                    background: linear-gradient(135deg, #eaddff 0%, #ffd8e4 100%);
+                    border: 1px solid rgba(103, 80, 164, 0.25);
+                    box-shadow: 0 6px 16px rgba(103, 80, 164, 0.18);
+                    text-align: center;
+                ">
+                    <div style="color:#21005d; font-weight:800; font-size:1.5rem; line-height:1.3;">
+                        Coming soon to your area!!
+                    </div>
+                    <div style="color:#21005d; font-weight:600; font-size:0.95rem; opacity:0.9; margin-top:0.25rem;">
+                        Now only available in Toronto
+                    </div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
     def render_success_message(self, message: str):
         """Render success message"""
         st.success(f"✅ {message}")

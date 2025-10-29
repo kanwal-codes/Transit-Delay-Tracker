@@ -301,7 +301,7 @@ class MapleMoverApp:
             # User has location - show transit results
             # Check Toronto boundaries
             if not self.geo._is_toronto_area(lat, lon):
-                self.ui.render_info_message("🗺️ Now only available in Toronto — coming soon to your area!")
+                self.ui.render_out_of_area_message()
                 self.ui.render_footer()
                 return
             
