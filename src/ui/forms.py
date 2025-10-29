@@ -21,12 +21,6 @@ class FormComponents:
 
         detected_address = st.session_state.get("search_address", "")
         
-        # --- WRAP ENTIRE SECTION IN CONTAINER ---
-        st.markdown("""
-        <div class="search-container">
-        <div style="width: 100%; max-width: 28rem; margin: 0 auto;">
-        """, unsafe_allow_html=True)
-        
         # Search input
         address = st.text_input(
             "Search Address",
@@ -56,6 +50,28 @@ class FormComponents:
         </script>
         """, unsafe_allow_html=True)
 
+        # Global style to force same height on all buttons
+        st.markdown("""
+        <style>
+        /* Force columns to align items to top */
+        div[data-testid*="column"] {
+            align-items: flex-start !important;
+            vertical-align: top !important;
+        }
+        /* Force ALL buttons to same height and align to top */
+        button[kind="primary"], button[kind="secondary"] {
+            height: 5rem !important;
+            min-height: 5rem !important;
+            vertical-align: top !important;
+            color: white !important;
+        }
+        /* Make hover effect consistent for all buttons */
+        button:hover {
+            background: linear-gradient(135deg, #6750a4 0%, #7c4a91 100%) !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
         # Two buttons side by side: Search (big) and Location (small)
         col1, col2 = st.columns([3, 1], gap="small")
         
@@ -66,12 +82,10 @@ class FormComponents:
                 st.rerun()
 
         with col2:
-            # Location button (small, with icon)
-            if st.button("📍", use_container_width=True, key="location_btn", help="Use my current location"):
+            # Location button (small, with text)
+            if st.button("Detect Location", use_container_width=True, key="location_btn", help="Use my current location"):
                 st.session_state.location_requested = True
                 st.rerun()
-        
-        st.markdown("</div></div>", unsafe_allow_html=True)
 
         # --- CURRENT LOCATION LABEL ---
         if detected_address:

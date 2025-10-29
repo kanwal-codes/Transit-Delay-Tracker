@@ -187,7 +187,9 @@ input[aria-label*="Search Address"],
 }
 
 /* Button styling - Modern gradient button with better formatting */
-.stButton > button {
+.stButton > button,
+button[kind="primary"],
+button[kind="secondary"] {
     background: linear-gradient(135deg, #6750a4 0%, #7c4a91 100%) !important;
     color: white !important;
     border: none !important;
@@ -199,7 +201,7 @@ input[aria-label*="Search Address"],
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     box-shadow: 0 4px 12px rgba(103, 80, 164, 0.3) !important;
     cursor: pointer !important;
-    height: 3.5rem !important;
+    height: 5rem !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -208,8 +210,8 @@ input[aria-label*="Search Address"],
 
 .stButton > button:hover {
     transform: translateY(-2px) scale(1.02) !important;
-    box-shadow: 0 8px 20px rgba(103, 80, 164, 0.4) !important;
-    background: linear-gradient(135deg, #554593 0%, #6b3e7a 100%) !important;
+    box-shadow: 0 8px 20px rgba(103, 80, 164, 0.6) !important;
+    background: linear-gradient(135deg, #6750a4 0%, #7c4a91 100%) !important;
 }
 
 .stButton > button:active {
@@ -217,17 +219,24 @@ input[aria-label*="Search Address"],
     box-shadow: 0 2px 8px rgba(103, 80, 164, 0.2) !important;
 }
 
-/* GPS button specific styling */
+/* Location button specific styling */
+#location-button-container .stButton > button,
+.stButton > button[help="Use my current location"],
 .stButton > button[title*="GPS"], 
-.stButton > button[title*="current location"],
-.stButton > button:last-child {
+.stButton > button[title*="current location"] {
     background: linear-gradient(135deg, #6750a4 0%, #7c4a91 100%) !important;
+    height: 5rem !important;
+}
+
+/* Search button specific styling */
+#search-button-container .stButton > button {
+    height: 5rem !important;
 }
 
 .stButton > button[title*="GPS"]:hover,
 .stButton > button[title*="current location"]:hover,
 .stButton > button:last-child:hover {
-    background: linear-gradient(135deg, #554593 0%, #6b3e7a 100%) !important;
+    background: linear-gradient(135deg, #6750a4 0%, #7c4a91 100%) !important;
 }
 
 /* Hide Streamlit labels */

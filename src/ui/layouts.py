@@ -17,12 +17,35 @@ class LayoutComponents:
 
     def render_header(self):
         """Render Homepage-style header with logo - exact match"""
+        st.markdown(
+            '<div style="margin-top: -5rem; margin-bottom: 0; padding: 0;">', 
+            unsafe_allow_html=True
+        )
+        st.markdown("""
+        <style>
+        /* Remove Streamlit's default padding/margin from top */
+        .stApp > header,
+        .stApp > div[data-testid="stHeader"] {
+            display: none !important;
+        }
+        /* Remove padding from main content */
+        .stApp > div[data-testid="stApp"] {
+            padding-top: 0 !important;
+        }
+        /* Remove extra space from markdown blocks */
+        div[data-testid="stMarkdownContainer"]:first-child {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
         st.markdown("""
         <div style="position: sticky; top: 0; z-index: 50; 
                     backdrop-filter: blur(12px);
                     border-bottom: 1px solid #e7e0ec;
-                    background: rgba(255, 255, 255, 0.8);">
-            <div style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem;">
+                    background: rgba(255, 255, 255, 0.8);
+                    margin-top: -2rem;">
+            <div style="max-width: 1280px; margin: 0 auto; padding: 0.5rem 1.5rem;">
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
                     <div style="display: flex; align-items: center; justify-center; 
                                 width: 3rem; height: 3rem; 
@@ -45,3 +68,4 @@ class LayoutComponents:
             </div>
         </div>
         """, unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
