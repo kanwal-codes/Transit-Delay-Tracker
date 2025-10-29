@@ -147,57 +147,8 @@ class MapleMoverApp:
                             'vehicle_locations': vehicle_coords
                         })
             
-            else:
-                # If no predictions but we know the stop exists - show each route that serves it
-                routes = data.get('routes', [])
-                
-                if routes:
-                    # Show each route that serves this stop
-                    # Use seen_routes to avoid duplicates across different stops
-                    for route_tag in routes:
-                        route_key = f"Route {route_tag}"  # Simple route name without direction
-                        
-                        if route_key not in seen_routes:
-                            seen_routes.add(route_key)
-                            
-                            # Get ALL buses on this route even if no predictions
-                            all_route_buses = self.api.ttc_service.nextbus_service.get_all_buses_for_route(route_tag, all_vehicles)
-                            
-                            # Build vehicle coordinates for all route buses
-                            vehicle_coords = []
-                            for bus in all_route_buses:
-                                bus_lat = float(bus['lat']) if bus.get('lat') else 0
-                                bus_lon = float(bus['lon']) if bus.get('lon') else 0
-                                
-                                if bus_lat and bus_lon and bus_lat != 0 and bus_lon != 0:
-                                    vehicle_coords.append({
-                                        'lat': bus_lat,
-                                        'lon': bus_lon,
-                                        'arrival_minutes': 999,
-                                        'all_route': True,
-                                        'direction': bus.get('direction', ''),
-                                        'speed': bus.get('speed', 0)
-                                    })
-                            
-                            all_opts.append({
-                                'route_name': route_key,
-                                'station_name': stop_name,
-                                'closest_arrival': '—',
-                                'next_arrivals': [],
-                                'data_source': data.get('data_source', 'unknown'),
-                                'distance': distance,
-                                'vehicle_locations': vehicle_coords
-                            })
-                else:
-                    # Fallback if no routes listed
-                    all_opts.append({
-                        'route_name': 'Route Available',
-                        'station_name': stop_name,
-                        'closest_arrival': '—',
-                        'next_arrivals': [],
-                        'data_source': data.get('data_source', 'unknown'),
-                        'distance': distance
-                    })
+            # Don't show cards without real-time predictions
+            # Only show routes that have actual arrival time predictions
         
         logger.info(f"🚀 NextBus service completed: {len(all_opts)} transit options from {len(transit_data)} stops")
         
