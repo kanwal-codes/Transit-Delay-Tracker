@@ -201,6 +201,8 @@ class MapleMoverApp:
                     addr = self.geo.reverse_geocode(detected_lat, detected_lon)
                 if addr:
                     st.session_state.search_address = addr
+                    # Overwrite the text input content immediately
+                    st.session_state["search_input"] = addr
                 
                 st.session_state.location_source = source
                 st.session_state.user_lat = detected_lat
@@ -212,30 +214,35 @@ class MapleMoverApp:
                 if st.session_state.get("location_requested"):
                     st.session_state.location_requested = False
 
-        # Step 1: show the search bar always (now with address populated)
-        address = self.ui.render_search_interface()
-
-        # Step 2: handle search input or location detection
-        # Check if user wants to search
-        search_requested = st.session_state.get("search_requested", False) or (address and address.strip())
+        # Step 1: handle Detect Location before rendering inputs to allow programmatic overwrite
         location_requested = st.session_state.get("location_requested", False)
-        
-        # Detect location if requested
         if location_requested:
-            detected_lat, detected_lon, source = self.loc.get_user_location()
-            if detected_lat and detected_lon:
+            params = st.query_params
+            has_browser_coords = bool(params.get("user_lat") and params.get("user_lon"))
+            if has_browser_coords:
+                try:
+                    detected_lat = float(params["user_lat"][0] if isinstance(params["user_lat"], list) else params["user_lat"])
+                    detected_lon = float(params["user_lon"][0] if isinstance(params["user_lon"], list) else params["user_lon"])
+                except Exception:
+                    detected_lat, detected_lon = None, None
+            else:
+                detected_lat, detected_lon = None, None
+
+            if detected_lat is not None and detected_lon is not None:
                 with st.spinner("📍 Converting coordinates to address..."):
                     addr = self.geo.reverse_geocode(detected_lat, detected_lon)
                 if addr:
                     st.session_state.search_address = addr
-                    st.session_state.location_source = source
-                    st.session_state.user_lat = detected_lat
-                    st.session_state.user_lon = detected_lon
-                    lat = detected_lat
-                    lon = detected_lon
+                    st.session_state["search_input"] = addr
+                st.session_state.location_source = "browser_geolocation"
+                st.session_state.user_lat = detected_lat
+                st.session_state.user_lon = detected_lon
                 st.session_state.location_requested = False
+                # Rerun so the text input initializes with new value before being created
+                st.rerun()
+                return
             else:
-                # No coordinates yet – trigger a browser geolocation request now
+                # Trigger a browser geolocation request now and wait for reload
                 components.html("""
                 <script>
                 (function() {
@@ -260,6 +267,13 @@ class MapleMoverApp:
                 """, height=0)
                 st.info("Requesting your location... please allow the browser prompt.")
                 return
+
+        # Step 2: show the search bar always (now with address populated)
+        address = self.ui.render_search_interface()
+
+        # Step 3: handle search input
+        # Only trigger manual search on explicit action (Enter or Search button)
+        search_requested = st.session_state.get("search_requested", False)
         
         # Handle manual search input
         if search_requested:
@@ -282,7 +296,7 @@ class MapleMoverApp:
                 st.session_state.search_requested = False  # Clear the flag even on error
                 return
 
-        # Step 3: Show results OR landing page
+        # Step 4: Show results OR landing page
         if lat and lon:
             # User has location - show transit results
             # Check Toronto boundaries
