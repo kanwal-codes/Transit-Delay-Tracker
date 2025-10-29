@@ -80,6 +80,12 @@ class MapleMoverApp:
                 
                 # Create one transit option per unique route/direction/bus
                 for route_key, pred_list in grouped_predictions.items():
+                    # Skip if we already added this route from another stop
+                    if route_key in seen_routes:
+                        logger.debug(f"⏭️ Skipping duplicate route: {route_key}")
+                        continue
+                    seen_routes.add(route_key)
+                    
                     # Sort by arrival time
                     pred_list.sort(key=lambda x: x['minutes'])
                     
