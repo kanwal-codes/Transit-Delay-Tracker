@@ -190,7 +190,7 @@ input[aria-label*="Search Address"],
 .stButton > button,
 button[kind="primary"],
 button[kind="secondary"] {
-    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green)) !important;
+    background: #6750a4 !important;
     color: white !important;
     border: none !important;
     border-radius: 16px !important;
@@ -210,8 +210,8 @@ button[kind="secondary"] {
 
 .stButton > button:hover {
     transform: translateY(-2px) scale(1.02) !important;
-    box-shadow: 0 8px 20px rgba(45, 80, 22, 0.4) !important;
-    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green)) !important;
+    box-shadow: 0 8px 20px rgba(103, 80, 164, 0.6) !important;
+    background: #6750a4 !important;
 }
 
 .stButton > button:active {
@@ -224,7 +224,7 @@ button[kind="secondary"] {
 .stButton > button[help="Use my current location"],
 .stButton > button[title*="GPS"], 
 .stButton > button[title*="current location"] {
-    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 50%, var(--primary-orange) 100%) !important;
+    background: #6750a4 !important;
     height: 5rem !important;
 }
 
@@ -236,7 +236,7 @@ button[kind="secondary"] {
 .stButton > button[title*="GPS"]:hover,
 .stButton > button[title*="current location"]:hover,
 .stButton > button:last-child:hover {
-    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green)) !important;
+    background: #6750a4 !important;
 }
 
 /* Hide Streamlit labels */

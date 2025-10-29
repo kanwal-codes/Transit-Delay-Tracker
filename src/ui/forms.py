@@ -67,7 +67,7 @@ class FormComponents:
         }
         /* Make hover effect consistent for all buttons */
         button:hover {
-            background: linear-gradient(135deg, #2D5016, #4A7C59) !important;
+            background: #6750a4 !important;
         }
         </style>
         """, unsafe_allow_html=True)
@@ -76,13 +76,37 @@ class FormComponents:
         col1, col2 = st.columns([3, 1], gap="small")
         
         with col1:
-            # Search button (main button, 3/4 width)
+            # Search button (main button, 3/4 width) - using primary container color
+            st.markdown("""
+            <style>
+                button[kind="primary"] {
+                    background: #eaddff !important;
+                    color: #21005d !important;
+                }
+                button[kind="primary"]:hover {
+                    background: #6750a4 !important;
+                    color: white !important;
+                }
+            </style>
+            """, unsafe_allow_html=True)
             if st.button("🔍 Search", use_container_width=True, key="search_btn", type="primary"):
                 st.session_state.search_requested = True
                 st.rerun()
 
         with col2:
-            # Location button (small, with text)
+            # Location button (small, with text) - using tertiary container color
+            st.markdown("""
+            <style>
+                button[help*="location"], button[help="Use my current location"] {
+                    background: #ffd8e4 !important;
+                    color: #31111d !important;
+                }
+                button[help*="location"]:hover, button[help="Use my current location"]:hover {
+                    background: #7d5260 !important;
+                    color: white !important;
+                }
+            </style>
+            """, unsafe_allow_html=True)
             if st.button("Detect Location", use_container_width=True, key="location_btn", help="Use my current location"):
                 st.session_state.location_requested = True
                 st.rerun()

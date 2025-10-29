@@ -6,9 +6,12 @@ import sys
 import os
 from pathlib import Path
 
-# Load environment variables
-from dotenv import load_dotenv
-load_dotenv()
+# Load environment variables if available (not required for Streamlit Cloud)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not installed, use Streamlit secrets instead
 
 # Add src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
