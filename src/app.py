@@ -8,6 +8,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import streamlit as st
+import streamlit.components.v1 as components
 import structlog
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -162,6 +163,35 @@ class MapleMoverApp:
         lat = st.session_state.get("user_lat")
         lon = st.session_state.get("user_lon")
         
+        # AUTO-DETECT location on first load via JavaScript
+        # Only run if no location in query params already
+        if not st.session_state.get("auto_location_processed", False) and not st.query_params.get("user_lat"):
+            components.html("""
+            <script>
+            (function() {
+                console.log('Auto-detection: Starting geolocation...');
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(pos) {
+                            console.log('Auto-detection: Success!', pos.coords.latitude, pos.coords.longitude);
+                            const url = new URL(window.parent.location);
+                            url.searchParams.set('user_lat', pos.coords.latitude);
+                            url.searchParams.set('user_lon', pos.coords.longitude);
+                            console.log('Auto-detection: Redirecting...');
+                            window.parent.location.replace(url.toString());
+                        },
+                        function(err) { 
+                            console.error('Auto-detection: Error', err.message); 
+                        },
+                        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+                    );
+                } else {
+                    console.error('Auto-detection: Geolocation not supported');
+                }
+            })();
+            </script>
+            """, height=0)
+        
         # Auto-detect location on page load (if coordinates in query params)
         if not st.session_state.get("auto_location_processed", False):
             detected_lat, detected_lon, source = self.loc.get_user_location()
@@ -210,9 +240,14 @@ class MapleMoverApp:
                 coords = self.geo.geocode_address(address)
             if coords:
                 lat, lon = coords
+                # Get the full formatted address from reverse geocoding
+                formatted_address = self.geo.reverse_geocode(lat, lon)
+                if formatted_address:
+                    st.session_state.search_address = formatted_address
+                else:
+                    st.session_state.search_address = address
                 st.session_state.user_lat = lat
                 st.session_state.user_lon = lon
-                st.session_state.search_address = address
                 st.session_state.location_source = "manual"
                 st.session_state.search_requested = False  # Clear the flag
             else:
