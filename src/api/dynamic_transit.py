@@ -10,6 +10,7 @@ from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass
 from src.config.settings import Settings
 from src.utils.geo_utils import calculate_distance
+from src.utils.routes_cache import load_routes_cache, save_routes_cache, get_cache_age
 
 logger = structlog.get_logger()
 
@@ -43,6 +44,19 @@ class NextBusTransitService:
         self.routes_cache = {}
         self.stops_cache = {}  # stop_id -> TransitStop
         self.route_stops_cache = {}  # route_tag -> [stop_ids]
+        
+        # Try to load from disk cache
+        self._load_disk_cache()
+    
+    def _load_disk_cache(self):
+        """Load routes cache from disk if available"""
+        routes, stops, route_stops = load_routes_cache()
+        if routes and stops:
+            self.routes_cache = routes
+            self.stops_cache = stops
+            self.route_stops_cache = route_stops
+            age = get_cache_age()
+            logger.info(f"📋 Loaded routes from disk cache (age: {age} days)")
         
     def discover_all_routes(self) -> Dict[str, RouteInfo]:
         """Discover all TTC routes and their stops"""
@@ -88,6 +102,9 @@ class NextBusTransitService:
             
             # Build reverse index: stop_id -> routes that serve it
             self._build_stop_to_routes_index()
+            
+            # Save to disk cache for next time
+            save_routes_cache(self.routes_cache, self.stops_cache, self.route_stops_cache)
             
             logger.info(f"✅ Discovered {len(all_routes)} routes with stops")
             return all_routes

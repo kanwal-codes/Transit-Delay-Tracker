@@ -32,6 +32,10 @@ venv.bak/
 .streamlit/cache/
 .streamlit/secrets.toml
 
+# Routes Cache
+cache/
+*.pkl
+
 # IDE
 .vscode/
 .idea/
