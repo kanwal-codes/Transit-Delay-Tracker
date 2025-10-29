@@ -2,7 +2,7 @@
 
 ## 🚀 Faster App Startup with Routes Cache
 
-This app uses a persistent disk cache for TTC routes data to dramatically improve startup and search performance.
+This app uses a persistent cache for TTC routes data to dramatically improve startup and search performance. Supports both Redis (production, multi-server) and disk (local/single-server) caching.
 
 ### ⚡ Performance Improvement
 
@@ -15,6 +15,47 @@ This app uses a persistent disk cache for TTC routes data to dramatically improv
 - Subsequent searches: 2-5 seconds
 
 ### 📋 Setup Instructions
+
+#### Option A: Redis Cache (Recommended for Production)
+
+For multi-server deployments or shared cache:
+
+```bash
+# Install Redis (if not installed)
+# macOS: brew install redis
+# Ubuntu: sudo apt-get install redis-server
+
+# Start Redis
+redis-server
+
+# Set environment variables (optional, defaults shown)
+export REDIS_HOST=localhost
+export REDIS_PORT=6379
+export REDIS_DB=0
+
+# Run cache setup script
+python create_routes_cache.py
+```
+
+**Benefits:**
+- Shared cache across multiple server instances
+- Survives server restarts
+- Fast access (~2-10ms)
+- All users benefit from same cached data
+
+#### Option B: Disk Cache (Local/Single Server)
+
+For local development or single server:
+
+```bash
+# Just run the cache setup script
+python create_routes_cache.py
+```
+
+**Benefits:**
+- Fastest access (~0.001s)
+- No external dependencies
+- Works offline
 
 #### 1. Pre-populate the cache (one-time setup)
 

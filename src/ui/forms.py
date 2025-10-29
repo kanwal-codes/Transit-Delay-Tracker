@@ -7,26 +7,7 @@ import streamlit.components.v1 as components
 
 class FormComponents:
     def render_search_interface(self):
-        # --- GEOLOCATION JS ---
-        components.html("""
-        <script>
-        (function() {
-            const url = new URL(window.parent.location);
-            if (url.searchParams.get('user_lat') && url.searchParams.get('user_lon')) return;
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(pos) {
-                        url.searchParams.set('user_lat', pos.coords.latitude);
-                        url.searchParams.set('user_lon', pos.coords.longitude);
-                        window.parent.location.replace(url.toString());
-                    },
-                    function(err) { console.log("Geolocation error:", err); },
-                    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
-                );
-            }
-        })();
-        </script>
-        """, height=0)
+        # Auto-detection disabled - now handled by location button only
 
         # --- PAGE TITLE (matching Homepage) ---
         st.markdown("""
@@ -50,15 +31,45 @@ class FormComponents:
         address = st.text_input(
             "Search Address",
             value=detected_address,
-            placeholder="Search for routes, stops, or destinations...",
+            placeholder="Enter an address and press Enter or click Search...",
             label_visibility="collapsed",
             key="search_input",
         )
+        
+        # Add JavaScript for Enter key detection
+        st.markdown("""
+        <script>
+        (function() {
+            const input = window.parent.document.querySelector('input[data-testid="stTextInput"] input');
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && input.value.trim()) {
+                        // Trigger search button click
+                        const searchBtn = window.parent.document.querySelector('button[kind="primary"]');
+                        if (searchBtn) {
+                            searchBtn.click();
+                        }
+                    }
+                });
+            }
+        })();
+        </script>
+        """, unsafe_allow_html=True)
 
-        # Location button
-        if st.button("Use My Location", use_container_width=True, key="location_btn"):
-            st.session_state.location_requested = True
-            st.rerun()
+        # Two buttons side by side: Search (big) and Location (small)
+        col1, col2 = st.columns([3, 1], gap="small")
+        
+        with col1:
+            # Search button (main button, 3/4 width)
+            if st.button("🔍 Search", use_container_width=True, key="search_btn", type="primary"):
+                st.session_state.search_requested = True
+                st.rerun()
+
+        with col2:
+            # Location button (small, with icon)
+            if st.button("📍", use_container_width=True, key="location_btn", help="Use my current location"):
+                st.session_state.location_requested = True
+                st.rerun()
         
         st.markdown("</div></div>", unsafe_allow_html=True)
 

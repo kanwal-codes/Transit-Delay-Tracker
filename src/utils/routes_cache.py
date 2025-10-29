@@ -1,21 +1,52 @@
 """
 Persistent cache for TTC routes data
-Saves routes to disk to avoid re-discovering on every app start
+Saves routes to disk or Redis to avoid re-discovering on every app start
 """
 
 import json
 import os
 import pickle
-from typing import Dict, List
+from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass, asdict
 from datetime import datetime, timedelta
 import structlog
+
+# Try to import Redis
+try:
+    import redis
+    REDIS_AVAILABLE = True
+except ImportError:
+    REDIS_AVAILABLE = False
+    redis = None
 
 logger = structlog.get_logger("routes_cache")
 
 CACHE_DIR = "cache"
 ROUTES_CACHE_FILE = os.path.join(CACHE_DIR, "routes_cache.json")
 ROUTES_CACHE_PICKLE = os.path.join(CACHE_DIR, "routes_cache.pkl")
+
+# Redis configuration
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+REDIS_PORT = int(os.getenv("REDIS_PORT", "6379"))
+REDIS_DB = int(os.getenv("REDIS_DB", "0"))
+REDIS_KEY = "maple_mover:routes_cache"
+
+# Initialize Redis client
+redis_client = None
+if REDIS_AVAILABLE:
+    try:
+        redis_client = redis.Redis(
+            host=REDIS_HOST,
+            port=REDIS_PORT,
+            db=REDIS_DB,
+            decode_responses=False  # We're storing pickled data
+        )
+        # Test connection
+        redis_client.ping()
+        logger.info(f"✅ Connected to Redis at {REDIS_HOST}:{REDIS_PORT}")
+    except Exception as e:
+        logger.warning(f"⚠️ Redis not available: {e}. Falling back to disk cache.")
+        redis_client = None
 
 @dataclass
 class TransitStop:
@@ -74,10 +105,8 @@ class RouteInfo:
         )
 
 def save_routes_cache(routes_cache: Dict, stops_cache: Dict, route_stops_cache: Dict):
-    """Save routes cache to disk using pickle for better performance"""
+    """Save routes cache to Redis (if available) or disk"""
     try:
-        os.makedirs(CACHE_DIR, exist_ok=True)
-        
         # Convert to serializable format
         routes_dict = {}
         for route_tag, route_info in routes_cache.items():
@@ -95,6 +124,19 @@ def save_routes_cache(routes_cache: Dict, stops_cache: Dict, route_stops_cache: 
             'version': '1.0'
         }
         
+        # Try Redis first (fastest, shared across servers)
+        if redis_client:
+            try:
+                pickled_data = pickle.dumps(cache_data)
+                redis_client.set(REDIS_KEY, pickled_data)
+                logger.info(f"✅ Saved routes cache to Redis: {len(routes_cache)} routes, {len(stops_cache)} stops")
+                return True
+            except Exception as e:
+                logger.warning(f"⚠️ Redis save failed: {e}. Using disk fallback.")
+        
+        # Fallback to disk
+        os.makedirs(CACHE_DIR, exist_ok=True)
+        
         # Save using pickle for performance
         with open(ROUTES_CACHE_PICKLE, 'wb') as f:
             pickle.dump(cache_data, f)
@@ -103,7 +145,7 @@ def save_routes_cache(routes_cache: Dict, stops_cache: Dict, route_stops_cache: 
         with open(ROUTES_CACHE_FILE, 'w') as f:
             json.dump(cache_data, f, indent=2)
         
-        logger.info(f"✅ Saved routes cache: {len(routes_cache)} routes, {len(stops_cache)} stops")
+        logger.info(f"✅ Saved routes cache to disk: {len(routes_cache)} routes, {len(stops_cache)} stops")
         logger.info(f"📁 Cache file: {ROUTES_CACHE_PICKLE}")
         
         return True
@@ -112,11 +154,38 @@ def save_routes_cache(routes_cache: Dict, stops_cache: Dict, route_stops_cache: 
         logger.error(f"❌ Failed to save routes cache: {e}")
         return False
 
-def load_routes_cache() -> tuple:
-    """Load routes cache from disk"""
+def load_routes_cache() -> Optional[Tuple]:
+    """Load routes cache from Redis (if available) or disk"""
     try:
+        # Try Redis first (fastest, shared across servers)
+        if redis_client:
+            try:
+                pickled_data = redis_client.get(REDIS_KEY)
+                if pickled_data:
+                    cache_data = pickle.loads(pickled_data)
+                    
+                    # Convert back to objects
+                    routes_cache = {}
+                    for route_tag, route_data in cache_data['routes'].items():
+                        routes_cache[route_tag] = RouteInfo.from_dict(route_data)
+                    
+                    stops_cache = {}
+                    for stop_id, stop_data in cache_data['stops'].items():
+                        stops_cache[stop_id] = TransitStop.from_dict(stop_data)
+                    
+                    route_stops_cache = cache_data.get('route_stops', {})
+                    
+                    timestamp = cache_data.get('timestamp', 'unknown')
+                    logger.info(f"✅ Loaded routes cache from Redis ({timestamp})")
+                    logger.info(f"📋 Cache contains: {len(routes_cache)} routes, {len(stops_cache)} stops")
+                    
+                    return routes_cache, stops_cache, route_stops_cache
+            except Exception as e:
+                logger.warning(f"⚠️ Redis load failed: {e}. Using disk fallback.")
+        
+        # Fallback to disk
         if not os.path.exists(ROUTES_CACHE_PICKLE):
-            logger.info("📋 No routes cache found on disk")
+            logger.info("📋 No routes cache found (Redis or disk)")
             return None, None, None
         
         # Load using pickle
@@ -135,7 +204,7 @@ def load_routes_cache() -> tuple:
         route_stops_cache = cache_data.get('route_stops', {})
         
         timestamp = cache_data.get('timestamp', 'unknown')
-        logger.info(f"✅ Loaded routes cache from {timestamp}")
+        logger.info(f"✅ Loaded routes cache from disk ({timestamp})")
         logger.info(f"📋 Cache contains: {len(routes_cache)} routes, {len(stops_cache)} stops")
         
         return routes_cache, stops_cache, route_stops_cache

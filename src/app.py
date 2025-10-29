@@ -186,7 +186,7 @@ class MapleMoverApp:
 
         # Step 2: handle search input or location detection
         # Check if user wants to search
-        search_requested = address and address.strip()
+        search_requested = st.session_state.get("search_requested", False) or (address and address.strip())
         location_requested = st.session_state.get("location_requested", False)
         
         # Detect location if requested
@@ -214,8 +214,10 @@ class MapleMoverApp:
                 st.session_state.user_lon = lon
                 st.session_state.search_address = address
                 st.session_state.location_source = "manual"
+                st.session_state.search_requested = False  # Clear the flag
             else:
                 self.ui.render_error_message("❌ Could not locate that address.")
+                st.session_state.search_requested = False  # Clear the flag even on error
                 return
 
         # Step 3: Show results OR landing page
