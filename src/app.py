@@ -233,6 +233,32 @@ class MapleMoverApp:
                     lat = detected_lat
                     lon = detected_lon
                 st.session_state.location_requested = False
+            else:
+                # No coordinates yet – trigger a browser geolocation request now
+                components.html("""
+                <script>
+                (function() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            function(pos) {
+                                const url = new URL(window.parent.location);
+                                url.searchParams.set('user_lat', pos.coords.latitude);
+                                url.searchParams.set('user_lon', pos.coords.longitude);
+                                window.parent.location.replace(url.toString());
+                            },
+                            function(err) {
+                                console.error('Detect Location button error:', err && err.message);
+                            },
+                            { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+                        );
+                    } else {
+                        console.error('Geolocation not supported');
+                    }
+                })();
+                </script>
+                """, height=0)
+                st.info("Requesting your location... please allow the browser prompt.")
+                return
         
         # Handle manual search input
         if search_requested:
