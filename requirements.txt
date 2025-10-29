@@ -1,28 +1,7 @@
 # Maple Mover - Production Requirements
-# Minimal dependencies for production deployment
-
-# Core web framework
-streamlit==1.50.0
-
-# Data handling
-requests==2.31.0
-pandas==2.1.4
-
-# Visualization
-plotly==5.17.0
-
-# Environment management
-python-dotenv==1.0.0
-
-# Performance optimization
-watchdog==3.0.0
-redis==5.0.1  # Optional - for shared cache across multiple servers
-
-# Logging and monitoring
-structlog==23.1.0
-
-# Security
-cryptography==41.0.4
-
-# Testing (optional)
-pytest==7.4.3
+streamlit
+requests
+pandas
+plotly
+python-dotenv
+structlog
