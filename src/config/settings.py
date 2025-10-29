@@ -27,6 +27,9 @@ class Settings:
 
     # Mapbox (optional)
     MAPBOX_TOKEN = os.getenv("MAPBOX_TOKEN", None)
+    
+    # Google Maps API Configuration
+    GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', 'AIzaSyABIYScN991Hv_EXFjoUqLaTIQKBZZmx7A')
 
     # Logging Configuration
     LOG_LEVEL = "WARNING"

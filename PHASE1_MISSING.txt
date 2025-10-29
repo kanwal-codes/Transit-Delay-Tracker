@@ -1,0 +1,61 @@
+Phase 1 - What's Missing to Match Homepage Design
+
+✅ COMPLETED:
+1. Header - Logo, title, tagline ✓
+2. Hero Section Heading - "Find Your Route" ✓
+3. Footer - Copyright text ✓
+
+❌ MISSING:
+
+1. SEARCH BOX CONTAINER
+   Current: Empty div with purple background
+   Needed: 
+   - Padding: 2rem (p-8)
+   - Border-radius: 32px
+   - Shadow: shadow-xl (0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04))
+   - Background: primary-container (#eaddff)
+   - Space-y-4 (gap between elements)
+   - Must wrap the actual search input
+
+2. SEARCH INPUT STYLING
+   Current: Basic Streamlit input
+   Needed:
+   - Search icon on left (🔍)
+   - Height: 56px (h-14)
+   - Padding left: 3rem (for icon)
+   - Border-radius: 20px
+   - Border: 0
+   - Shadow: shadow-sm
+   - Font size: large (text-lg)
+   - Background: white
+   - Placeholder: "Search for routes, stops, or destinations..."
+
+3. "USE MY LOCATION" BUTTON
+   Current: Missing entirely
+   Needed:
+   - Full width button
+   - Height: 56px (h-14)
+   - Border-radius: 20px
+   - Shadow: shadow-md
+   - Background: primary color (#6750a4)
+   - Text color: white
+   - Font weight: 600
+   - Icon: Navigation arrow (📍 or similar)
+   - Text: "Use My Location"
+   - Gap between icon and text
+
+4. SPACING & LAYOUT
+   Current: Elements not properly grouped
+   Needed:
+   - Hero heading: max-width centered
+   - Search container: max-width centered with proper spacing-y
+   - Text sizes: text-5xl for heading, text-xl for subtitle
+
+5. COLORS (Material 3)
+   - Heading: on-surface (#1c1b1f)
+   - Subtitle: on-surface-variant (#49454f)
+   - Search container: primary-container (#eaddff)
+   - Button: primary (#6750a4) with on-primary (white)
+
+
+

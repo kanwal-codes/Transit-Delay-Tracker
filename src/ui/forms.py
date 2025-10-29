@@ -39,29 +39,28 @@ class FormComponents:
         """, unsafe_allow_html=True)
 
         detected_address = st.session_state.get("search_address", "")
+        
+        # --- WRAP ENTIRE SECTION IN CONTAINER ---
+        st.markdown("""
+        <div class="search-container">
+        <div style="width: 100%; max-width: 28rem; margin: 0 auto;">
+        """, unsafe_allow_html=True)
+        
+        # Search input
+        address = st.text_input(
+            "Search Address",
+            value=detected_address,
+            placeholder="Search for routes, stops, or destinations...",
+            label_visibility="collapsed",
+            key="search_input",
+        )
 
-        # --- PURPLE CONTAINER - Wrap entire section ---
-        st.markdown('<div class="search-container">', unsafe_allow_html=True)
+        # Location button
+        if st.button("Use My Location", use_container_width=True, key="location_btn"):
+            st.session_state.location_requested = True
+            st.rerun()
         
-        col1, col2 = st.columns([3, 1])
-        
-        with col1:
-            # Search input
-            address = st.text_input(
-                "Search Address",
-                value=detected_address,
-                placeholder="Search for routes, stops, or destinations...",
-                label_visibility="collapsed",
-                key="search_input",
-            )
-
-        with col2:
-            # Location button
-            if st.button("Use My Location", use_container_width=True, key="location_btn"):
-                st.session_state.location_requested = True
-                st.rerun()
-        
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("</div></div>", unsafe_allow_html=True)
 
         # --- CURRENT LOCATION LABEL ---
         if detected_address:

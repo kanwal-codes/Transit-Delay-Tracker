@@ -16,4 +16,7 @@ echo "💡 Save any file to automatically reload the app!"
 echo ""
 
 # Run the app with auto-reload
-python -m streamlit run src/app.py
+python -m streamlit run app.py
+
+
+

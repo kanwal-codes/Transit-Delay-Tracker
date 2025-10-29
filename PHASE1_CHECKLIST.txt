@@ -1,0 +1,80 @@
+PHASE 1 IMPLEMENTATION CHECKLIST
+==================================
+
+COMPARING WITH: /Homepage/src/components/SearchSection.tsx
+
+✅ HEADER (layouts.py):
+- [x] Sticky position
+- [x] Backdrop blur
+- [x] Border bottom
+- [x] Logo icon (MapPin/📍) in primary color container
+- [x] Text size: text-2xl (1.5rem) for "Maple Mover"
+- [x] Text size: text-sm (0.875rem) for "Canadian Transit"
+- [x] Gap: gap-3 (0.75rem)
+- [x] Container padding: px-6 py-4
+✅ STATUS: COMPLETE
+
+✅ HERO HEADING (forms.py line 43-55):
+- [x] Wrapper: max-w-2xl (42rem), mx-auto, space-y-6 (1.5rem gap)
+- [x] Heading: text-5xl (3rem), fontWeight: 800
+- [x] Subtitle: text-xl (1.25rem)
+- [x] Colors: on-surface for heading, on-surface-variant for subtitle
+- [x] Text center alignment
+- [x] Gap between heading and subtitle: space-y-3 (0.75rem)
+✅ STATUS: COMPLETE
+
+✅ SEARCH CONTAINER (forms.py line 60-65):
+- [x] Padding: p-8 (2rem)
+- [x] Border radius: rounded-[32px]
+- [x] Shadow: shadow-xl (exact Tailwind values)
+- [x] Background: primary-container (#eaddff)
+- [x] Inner spacing: space-y-4 (1rem)
+✅ STATUS: COMPLETE
+
+✅ SEARCH INPUT (forms.py line 68-102):
+- [x] Icon: 🔍 search icon
+- [x] Icon position: left-4 (1rem from left)
+- [x] Input padding-left: pl-12 (3rem for icon)
+- [x] Height: h-14 (3.5rem)
+- [x] Border radius: rounded-[20px]
+- [x] Border: border-0 (none)
+- [x] Shadow: shadow-sm
+- [x] Font size: text-lg (1.125rem)
+- [x] Background: white
+- [x] Placeholder text: "Search for routes, stops, or destinations..."
+✅ STATUS: COMPLETE
+
+❌ BUTTON ISSUES:
+CURRENT: Button styled via CSS override
+NEEDED: 
+- Gap between icon and text (gap-2)
+- Button should be h-14 (3.5rem)
+- Border radius: rounded-[20px]
+- Shadow: shadow-md
+- Background: primary color (#6750a4)
+- Color: on-primary (white)
+- Font weight: 600
+- Text size: text-lg (1.125rem)
+- Icon: Navigation arrow
+
+❌ PROBLEM: Streamlit button doesn't support icon + text gap properly
+❌ SOLUTION NEEDED: Wrap in HTML with proper icon placement
+
+✅ FOOTER (components.py):
+- [x] Copyright text
+- [x] Border top
+- [x] Padding: py-8, px-6
+✅ STATUS: COMPLETE
+
+--------------------------------------------------
+ISSUES TO FIX:
+1. Button doesn't have proper Navigation icon
+2. Button gap between icon and text not working (Streamlit limitation)
+3. Need to check if button styling is applying correctly
+
+RECOMMENDATION:
+- Test current implementation
+- If button styling doesn't match, replace with HTML div styled as button
+
+
+

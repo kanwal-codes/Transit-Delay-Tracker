@@ -34,18 +34,18 @@ def calculate_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> fl
 
 def is_within_toronto_bounds(lat: float, lon: float) -> bool:
     """
-    Check if coordinates are within Toronto area
+    Check if coordinates are within Toronto proper (excluding GTA suburbs)
     
     Args:
         lat: Latitude
         lon: Longitude
         
     Returns:
-        True if coordinates are in Toronto area
+        True if coordinates are in Toronto proper
     """
-    # Toronto bounds (approximate)
-    min_lat, max_lat = 43.0, 44.0
-    min_lon, max_lon = -80.0, -79.0
+    # Toronto proper bounds (excluding all GTA suburbs)
+    min_lat, max_lat = 43.60, 43.80  # Toronto proper latitude range (more restrictive)
+    min_lon, max_lon = -79.60, -79.20  # Toronto proper longitude range (more restrictive)
     
     return min_lat <= lat <= max_lat and min_lon <= lon <= max_lon
 

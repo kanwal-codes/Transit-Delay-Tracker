@@ -14,4 +14,7 @@ echo "👉 Open your browser to: http://localhost:8501"
 echo ""
 
 # Run the app
-python -m streamlit run src/app.py
+python -m streamlit run app.py
+
+
+

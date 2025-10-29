@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maple Mover - Homepage Reference</title>
+    <style>
+        /* Material Design 3 Color Tokens */
+        :root {
+            --md-sys-color-primary: #6750a4;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #eaddff;
+            --md-sys-color-on-primary-container: #21005d;
+            --md-sys-color-secondary: #625b71;
+            --md-sys-color-on-secondary: #ffffff;
+            --md-sys-color-secondary-container: #e8def8;
+            --md-sys-color-on-secondary-container: #1d192b;
+            --md-sys-color-tertiary: #7d5260;
+            --md-sys-color-on-tertiary: #ffffff;
+            --md-sys-color-tertiary-container: #ffd8e4;
+            --md-sys-color-on-tertiary-container: #31111d;
+            --md-sys-color-error: #b3261e;
+            --md-sys-color-on-error: #ffffff;
+            --md-sys-color-surface: #fef7ff;
+            --md-sys-color-on-surface: #1c1b1f;
+            --md-sys-color-surface-variant: #e7e0ec;
+            --md-sys-color-on-surface-variant: #49454f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.5;
+        }
+
+        /* Sticky Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--md-sys-color-surface-variant);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            background: var(--md-sys-color-primary);
+        }
+
+        .logo-container span {
+            font-size: 1.5rem;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            color: var(--md-sys-color-on-surface);
+            font-weight: 700;
+        }
+
+        .header-text p {
+            margin: 0;
+            font-size: 0.875rem;
+            line-height: 1.25;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 4rem 1.5rem;
+        }
+
+        .hero-content {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            color: var(--md-sys-color-on-surface);
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--md-sys-color-on-surface-variant);
+            margin: 0;
+        }
+
+        /* Search Container - Purple Box */
+        .search-container {
+            max-width: 42rem;
+            margin: 0 auto;
+            background: var(--md-sys-color-primary-container);
+            padding: 2rem;
+            border-radius: 32px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Search Input */
+        .search-input-wrapper {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            height: 3.5rem;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.125rem;
+            background: white;
+            color: var(--md-sys-color-on-surface);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border: 2px solid var(--md-sys-color-primary);
+            box-shadow: 0 4px 12px rgba(103, 80, 164, 0.25);
+            background: #fffbfe;
+            transform: translateY(-1px);
+        }
+
+        .search-input::placeholder {
+            color: #79747e;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.25rem;
+            height: 1.25rem;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        /* Location Button */
+        .location-button {
+            width: 100%;
+            height: 3.5rem;
+            border: none;
+            border-radius: 16px;
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            font-size: 1.125rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(103, 80, 164, 0.3);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .location-button:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(103, 80, 164, 0.4);
+            background: linear-gradient(135deg, #554593 0%, #6b3e7a 100%);
+        }
+
+        .location-button:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 2px 8px rgba(103, 80, 164, 0.2);
+        }
+
+        /* Featured Routes Section */
+        .featured-section {
+            padding: 3rem 1.5rem;
+        }
+
+        .featured-container {
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+
+        .featured-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .featured-header h2 {
+            font-size: 2.25rem;
+            color: var(--md-sys-color-on-surface);
+            font-weight: 700;
+            margin: 0 0 0.75rem;
+        }
+
+        .featured-header p {
+            font-size: 1.125rem;
+            color: var(--md-sys-color-on-surface-variant);
+            margin: 0;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+            gap: 2rem;
+        }
+
+        /* Transit Card */
+        .transit-card {
+            width: 100%;
+            max-width: 28rem;
+            margin: 0 auto;
+            background: linear-gradient(to bottom, #ffffff, rgba(251, 245, 255, 0.3));
+            border-radius: 28px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 0;
+        }
+
+        .card-inner {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .card-route-number {
+            text-align: center;
+        }
+
+        .route-number-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 2rem;
+            background: var(--md-sys-color-primary-container);
+        }
+
+        .route-number-text {
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: var(--md-sys-color-on-primary-container);
+            line-height: 1;
+        }
+
+        .card-route-name {
+            text-align: center;
+            background: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+            padding: 0.75rem 1rem;
+            border-radius: 20px;
+            font-size: 1.125rem;
+            line-height: 1.75;
+        }
+
+        .card-arrival-times {
+            background: var(--md-sys-color-surface-variant);
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .arrival-time-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .arrival-time-primary {
+            background: var(--md-sys-color-tertiary-container);
+            color: var(--md-sys-color-on-tertiary-container);
+            padding: 0.75rem 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .arrival-time-primary span {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .arrival-time-secondary {
+            padding: 0.5rem 1.5rem;
+            border-radius: 12px;
+        }
+
+        .arrival-time-secondary span {
+            font-size: 1.125rem;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .arrival-bullet {
+            font-size: 1.5rem;
+            color: var(--md-sys-color-on-surface-variant);
+            opacity: 0.4;
+            margin: 0.5rem 0;
+        }
+
+        .card-last-stop {
+            background: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+            padding: 1.25rem;
+            border-radius: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .last-stop-label {
+            font-size: 0.875rem;
+            line-height: 1.25;
+            opacity: 0.7;
+            margin: 0;
+        }
+
+        .last-stop-station {
+            font-size: 1.125rem;
+            line-height: 1.75;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .last-stop-location {
+            font-size: 0.875rem;
+            line-height: 1.25;
+            opacity: 0.7;
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid var(--md-sys-color-surface-variant);
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 0.875rem;
+            color: var(--md-sys-color-on-surface-variant);
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <span>📍</span>
+                </div>
+                <div class="header-text">
+                    <h1>Maple Mover</h1>
+                    <p>Canadian Transit</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h2 class="hero-title">Find Your Route</h2>
+            <p class="hero-subtitle">Real-time transit information across Canada</p>
+        </div>
+
+        <!-- Search Container -->
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input 
+                    id="searchInput"
+                    type="text" 
+                    class="search-input" 
+                    placeholder="Search for routes, stops, or destinations..."
+                />
+            </div>
+            
+            <button class="location-button">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                </svg>
+                Use My Location
+            </button>
+        </div>
+    </section>
+
+    <!-- Featured Routes -->
+    <section class="featured-section">
+        <div class="featured-container">
+            <div class="featured-header">
+                <h2>Popular Routes</h2>
+                <p>Quick access to frequently used transit routes</p>
+            </div>
+
+            <div class="cards-grid">
+                <!-- Card 1: Route 504 -->
+                <div class="transit-card">
+                    <div class="card-inner">
+                        <!-- Route Number -->
+                        <div class="card-route-number">
+                            <div class="route-number-badge">
+                                <span class="route-number-text">504</span>
+                            </div>
+                        </div>
+
+                        <!-- Route Name -->
+                        <div class="card-route-name">
+                            <span>King Streetcar</span>
+                        </div>
+
+                        <!-- Arrival Times -->
+                        <div class="card-arrival-times">
+                            <div class="arrival-time-item">
+                                <div class="arrival-time-primary">
+                                    <span>2 min</span>
+                                </div>
+                                <span class="arrival-bullet">•</span>
+                            </div>
+                            <div class="arrival-time-item">
+                                <div class="arrival-time-secondary">
+                                    <span>in 13 mins</span>
+                                </div>
+                                <span class="arrival-bullet">•</span>
+                            </div>
+                            <div class="arrival-time-item">
+                                <div class="arrival-time-secondary">
+                                    <span>in 27 mins</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Last Stop -->
+                        <div class="card-last-stop">
+                            <p class="last-stop-label">Last stop</p>
+                            <p class="last-stop-station">King St West At Yonge St</p>
+                            <p class="last-stop-location">King Station</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Route 95 -->
+                <div class="transit-card">
+                    <div class="card-inner">
+                        <div class="card-route-number">
+                            <div class="route-number-badge">
+                                <span class="route-number-text">95</span>
+                            </div>
+                        </div>
+
+                        <div class="card-route-name">
+                            <span>York Mills</span>
+                        </div>
+
+                        <div class="card-arrival-times">
+                            <div class="arrival-time-item">
+                                <div class="arrival-time-primary">
+                                    <span>5 min</span>
+                                </div>
+                                <span class="arrival-bullet">•</span>
+                            </div>
+                            <div class="arrival-time-item">
+                                <div class="arrival-time-secondary">
+                                    <span>in 18 mins</span>
+                                </div>
+                                <span class="arrival-bullet">•</span>
+                            </div>
+                            <div class="arrival-time-item">
+                                <div class="arrival-time-secondary">
+                                    <span>in 35 mins</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-last-stop">
+                            <p class="last-stop-label">Last stop</p>
+                            <p class="last-stop-station">York Mills Station</p>
+                            <p class="last-stop-location">York Mills Terminal</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Route 320 -->
+                <div class="transit-card">
+                    <div class="card-inner">
+                        <div class="card-route-number">
+                            <div class="route-number-badge">
+                                <span class="route-number-text">320</span>
+                            </div>
+                        </div>
+
+                        <div class="card-route-name">
+                            <span>Yonge Express</span>
+                        </div>
+
+                        <div class="card-arrival-times">
+                            <div class="arrival-time-item">
+                                <div class="arrival-time-primary">
+                                    <span>1 min</span>
+                                </div>
+                                <span class="arrival-bullet">•</span>
+                            </div>
+                            <div class="arrival-time-item">
+                                <div class="arrival-time-secondary">
+                                    <span>in 8 mins</span>
+                                </div>
+                                <span class="arrival-bullet">•</span>
+                            </div>
+                            <div class="arrival-time-item">
+                                <div class="arrival-time-secondary">
+                                    <span>in 15 mins</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-last-stop">
+                            <p class="last-stop-label">Last stop</p>
+                            <p class="last-stop-station">Yonge St At Bloor St</p>
+                            <p class="last-stop-location">Bloor-Yonge Station</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p class="footer-text">© 2025 Maple Mover • Canadian Transit Information</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+
