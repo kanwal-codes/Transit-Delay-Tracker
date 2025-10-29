@@ -1,3 +1,6 @@
+STMBCONFIG:
+  mainModule: "src/app.py"
+
 [browser]
 gatherUsageStats = false
 
