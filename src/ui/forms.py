@@ -67,7 +67,7 @@ class FormComponents:
         }
         /* Make hover effect consistent for all buttons */
         button:hover {
-            background: linear-gradient(135deg, #6750a4 0%, #7c4a91 100%) !important;
+            background: linear-gradient(135deg, #2D5016, #4A7C59) !important;
         }
         </style>
         """, unsafe_allow_html=True)
